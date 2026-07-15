@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<title>Barkward Guidance Generator — $DOLR</title>
+<style>
+  :root {
+    --evergreen: #173B2F;
+    --caramel: #C9874B;
+    --cream: #F0D5A7;
+    --parchment: #F6EBD8;
+    --gold: #D9A441;
+    --red: #9F4038;
+    --ink: #15201C;
+
+    --bg: var(--parchment);
+    --bg-raised: #FBF3E4;
+    --text: var(--ink);
+    --text-muted: #4A5A50;
+    --rule: #D8C6A4;
+    --panel: var(--evergreen);
+    --panel-text: var(--cream);
+    --accent: var(--red);
+    --accent-gold: #B07E27;
+    --chip-border: #C4B08C;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0F1F19;
+      --bg-raised: #16291F;
+      --text: #EFE3C8;
+      --text-muted: #A3B5A8;
+      --rule: #2B4237;
+      --panel: #132C22;
+      --panel-text: var(--cream);
+      --accent: #C96A5D;
+      --accent-gold: var(--gold);
+      --chip-border: #3A5648;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: var(--parchment); --bg-raised: #FBF3E4; --text: var(--ink);
+    --text-muted: #4A5A50; --rule: #D8C6A4; --panel: var(--evergreen);
+    --panel-text: var(--cream); --accent: var(--red); --accent-gold: #B07E27;
+    --chip-border: #C4B08C;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1F19; --bg-raised: #16291F; --text: #EFE3C8;
+    --text-muted: #A3B5A8; --rule: #2B4237; --panel: #132C22;
+    --panel-text: var(--cream); --accent: #C96A5D; --accent-gold: var(--gold);
+    --chip-border: #3A5648;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", Calibri, system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+  .ribbon {
+    background: var(--panel);
+    color: var(--panel-text);
+    text-align: center;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 0.55rem 1rem;
+  }
+  .ribbon strong { color: var(--gold); font-weight: 600; }
+
+  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 1.25rem; }
+
+  header.top { text-align: center; padding: 2.2rem 0 1.6rem; }
+  .eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--accent-gold); margin: 0 0 0.6rem;
+  }
+  h1 {
+    font-family: Cambria, Georgia, "Times New Roman", serif;
+    font-size: clamp(1.7rem, 4.5vw, 2.5rem);
+    line-height: 1.1; margin: 0 0 0.6rem; text-wrap: balance;
+  }
+  header.top p { color: var(--text-muted); max-width: 40rem; margin: 0 auto; }
+
+  .studio {
+    display: grid;
+    grid-template-columns: minmax(19rem, 26rem) minmax(0, 1fr);
+    gap: 2rem;
+    padding: 1.5rem 0 3.5rem;
+    align-items: start;
+  }
+  @media (max-width: 56rem) { .studio { grid-template-columns: 1fr; } }
+
+  fieldset {
+    border: none; margin: 0 0 1.4rem; padding: 0;
+  }
+  legend {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent-gold); padding: 0; margin-bottom: 0.55rem;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .chips label {
+    border: 1px solid var(--chip-border);
+    padding: 0.35rem 0.8rem;
+    font-size: 0.86rem;
+    cursor: pointer;
+    user-select: none;
+    background: var(--bg-raised);
+  }
+  .chips input { position: absolute; opacity: 0; pointer-events: none; }
+  .chips input:checked + span { font-weight: 600; }
+  .chips label:has(input:checked) {
+    background: var(--panel); color: var(--panel-text); border-color: var(--panel);
+  }
+  .chips label:has(input:focus-visible) { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+  .slider-row { display: flex; align-items: center; gap: 0.9rem; }
+  input[type="range"] { flex: 1; accent-color: var(--accent); }
+  .biscuit-meter { font-size: 1rem; letter-spacing: 0.15em; color: var(--accent-gold); min-width: 6.5rem; }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.6rem; }
+  .btn {
+    font: inherit; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.65rem 1.2rem; cursor: pointer;
+    border: 1.5px solid var(--panel); background: transparent; color: var(--text);
+  }
+  @media (prefers-color-scheme: dark) { .btn { border-color: var(--cream); } }
+  :root[data-theme="light"] .btn { border-color: var(--panel); }
+  :root[data-theme="dark"] .btn { border-color: var(--cream); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #FBF3E4; }
+  .btn:hover { background: var(--panel); color: var(--panel-text); border-color: var(--panel); }
+  .btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.7rem; }
+  .hint a { color: inherit; }
+
+  .cardbox { position: sticky; top: 1.5rem; }
+  #memecard {
+    width: 100%; height: auto; display: block;
+    border: 1px solid var(--rule);
+    box-shadow: 0 10px 30px rgba(21, 32, 28, 0.18);
+    background: #F6EBD8;
+  }
+  .copiedmsg {
+    font-size: 0.8rem; color: var(--accent-gold); margin-top: 0.5rem;
+    min-height: 1.2em;
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon"><strong>Federal Treat Reserve</strong> · Communications Office · Unofficial parody — no affiliation</div>
+
+<header class="top wrap">
+  <a href="index.html" style="display:block;width:76px;margin:0 auto 0.9rem"><img src="assets/logo-coin.png" width="256" height="256" style="width:76px;height:76px;display:block" alt="DOLR coin logo — back to home"></a>
+  <p class="eyebrow">Barkward Guidance Generator</p>
+  <h1>Write the next policy statement</h1>
+  <p>Choose the conditions. Monty will issue the communiqué. Generated memes must not contain hateful content, impersonate real people or suggest official endorsement.</p>
+</header>
+
+<main class="wrap studio">
+  <form id="controls">
+    <fieldset>
+      <legend>Monty expression</legend>
+      <div class="chips" id="expr"></div>
+    </fieldset>
+    <fieldset>
+      <legend>Economic event</legend>
+      <div class="chips" id="event"></div>
+    </fieldset>
+    <fieldset>
+      <legend>Policy stance</legend>
+      <div class="chips" id="stance"></div>
+    </fieldset>
+    <fieldset>
+      <legend>Biscuit intensity</legend>
+      <div class="slider-row">
+        <input type="range" id="intensity" min="1" max="5" value="3" aria-label="Biscuit intensity, 1 to 5">
+        <span class="biscuit-meter" id="meter" aria-hidden="true"></span>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Market-cat reaction</legend>
+      <div class="chips" id="cat"></div>
+    </fieldset>
+
+    <div class="actions">
+      <button type="button" class="btn primary" id="randomize">Let Monty decide</button>
+      <button type="button" class="btn" id="download">Download PNG</button>
+      <button type="button" class="btn" id="copy">Copy statement</button>
+    </div>
+    <p class="copiedmsg" id="copiedmsg" role="status"></p>
+    <p class="hint"><a href="index.html">← Back to the Federal Treat Reserve</a></p>
+  </form>
+
+  <div class="cardbox">
+    <svg id="memecard" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Generated policy statement meme card"></svg>
+  </div>
+</main>
+
+<script>
+"use strict";
+
+/* ---------- content model ---------- */
+
+const EXPRESSIONS = [
+  { id: "serious", label: "Press-conference face" },
+  { id: "tilt",    label: "Confused head tilt" },
+  { id: "shock",   label: "Inflation shock" },
+  { id: "smile",   label: "Biscuit smile" },
+  { id: "stare",   label: "Whatever-it-takes stare" },
+];
+
+const EVENTS = [
+  { id: "hot",    label: "Hot inflation",    text: "the Treat Price Index rising sharply, led by chicken",
+    head: "TREATFLATION RUNS HOT" },
+  { id: "cool",   label: "Cool inflation",   text: "treat prices moderating for a second consecutive month",
+    head: "TREATFLATION COOLS. PROBABLY." },
+  { id: "rally",  label: "Market rally",     text: "a disorderly rally in tennis-ball futures",
+    head: "MARKETS RALLY ON NOTHING" },
+  { id: "sell",   label: "Market selloff",   text: "a sudden repricing across all major sofa indices",
+    head: "SELLOFF REACHES THE SOFA" },
+  { id: "mixed",  label: "Conflicting data", text: "incoming data pointing firmly in both directions",
+    head: "DATA CONFLICTS WITH DATA" },
+  { id: "liq",    label: "Liquidity crisis", text: "reserves reported missing and a squirrel declining to comment",
+    head: "LIQUIDITY LOCATED IN A TREE" },
+  { id: "rec",    label: "Recession debate", text: "two consecutive quarters of empty food bowl",
+    head: "IS THE BOWL TECHNICALLY EMPTY?" },
+];
+
+const STANCES = [
+  { id: "hike",  label: "Hike",  action: "raise treat rates by 25 biscuit points",
+    head: "TREAT RATES RAISED 25 BISCUIT POINTS" },
+  { id: "cut",   label: "Cut",   action: "cut treat rates in light of emergency sofa conditions",
+    head: "TREAT RATES CUT. SOFA CONDITIONS CITED." },
+  { id: "hold",  label: "Hold",  action: "hold treat rates steady and schedule a nap",
+    head: "RATES HELD. NAP SCHEDULED." },
+  { id: "qe",    label: "Emergency biscuits", action: "activate the emergency biscuit facility, effective immediately",
+    head: "EMERGENCY BISCUITS RELEASED" },
+  { id: "walk",  label: "Take a walk", action: "take a walk and reassess",
+    head: "COMMITTEE TAKES WALK, WILL REASSESS" },
+];
+
+const CATS = [
+  { id: "calm",     label: "Composed",         text: "remained broadly composed" },
+  { id: "jittery",  label: "Ears flattened",   text: "flattened its ears and repriced expectations" },
+  { id: "curtains", label: "Climbed curtains", text: "climbed the curtains within minutes of the release" },
+  { id: "vase",     label: "Knocked the vase", text: "knocked the dot paw off the table" },
+];
+
+const BISCUIT_LINES = [
+  "Biscuit deployment remains measured.",
+  "A modest biscuit facility stands ready.",
+  "Biscuit operations will continue at pace.",
+  "Substantial biscuits are entering circulation.",
+  "Biscuit deployment is now unlimited. The tin is open.",
+];
+
+const CLOSERS = [
+  "No forward guidance. Only barkward guidance.",
+  "Rates are data-dependent. The Chairdog is treat-dependent.",
+  "The landing remains soft. The sofa is softer.",
+  "The Committee stands ready to provide biscuits.",
+  "We are monitoring incoming data—and the kitchen.",
+];
+
+/* ---------- build controls ---------- */
+
+function buildChips(containerId, name, items, checkedId) {
+  const box = document.getElementById(containerId);
+  items.forEach(it => {
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    input.type = "radio"; input.name = name; input.value = it.id;
+    if (it.id === checkedId) input.checked = true;
+    const span = document.createElement("span");
+    span.textContent = it.label;
+    label.appendChild(input); label.appendChild(span);
+    input.addEventListener("change", render);
+    box.appendChild(label);
+  });
+}
+buildChips("expr", "expr", EXPRESSIONS, "serious");
+buildChips("event", "event", EVENTS, "hot");
+buildChips("stance", "stance", STANCES, "hold");
+buildChips("cat", "cat", CATS, "curtains");
+
+const intensity = document.getElementById("intensity");
+intensity.addEventListener("input", render);
+
+function picked(name, list) {
+  const v = document.querySelector(`input[name="${name}"]:checked`).value;
+  return list.find(x => x.id === v);
+}
+
+/* ---------- statement text ---------- */
+
+function statement() {
+  const ev = picked("event", EVENTS);
+  const st = picked("stance", STANCES);
+  const cat = picked("cat", CATS);
+  const n = +intensity.value;
+  const closer = CLOSERS[(EVENTS.indexOf(ev) + STANCES.indexOf(st) + n) % CLOSERS.length];
+  return {
+    headline: st.head,
+    sub: ev.head,
+    body: `The Federal Open Market Canines met today to consider ${ev.text}. ` +
+          `After reviewing the incoming data and sniffing it twice, the Committee voted to ${st.action}. ` +
+          `${BISCUIT_LINES[n - 1]} The market cat ${cat.text}.`,
+    closer,
+  };
+}
+
+/* ---------- card rendering (SVG) ---------- */
+
+const SVGNS = "http://www.w3.org/2000/svg";
+const card = document.getElementById("memecard");
+const measurer = document.createElement("canvas").getContext("2d");
+
+function el(name, attrs, text) {
+  const node = document.createElementNS(SVGNS, name);
+  for (const k in attrs) node.setAttribute(k, attrs[k]);
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+
+function wrapText(str, font, maxWidth) {
+  measurer.font = font;
+  const words = str.split(" ");
+  const lines = [];
+  let line = "";
+  for (const w of words) {
+    const test = line ? line + " " + w : w;
+    if (measurer.measureText(test).width > maxWidth && line) {
+      lines.push(line); line = w;
+    } else line = test;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+/* Monty head, parameterized by expression. Returns an SVG group. */
+function monty(expr) {
+  /* scale 0.8 about (540, 390) to leave room for the statement text */
+  const g = el("g", { transform: "translate(108 78) scale(0.8)" });
+  const head = el("g", { transform: expr === "tilt" ? "rotate(-11 540 330)" : "" });
+
+  // ears
+  head.appendChild(el("ellipse", { cx: 428, cy: 330, rx: 52, ry: 88, fill: "#B0723C", transform: "rotate(14 428 330)" }));
+  head.appendChild(el("ellipse", { cx: 652, cy: 330, rx: 52, ry: 88, fill: "#B0723C", transform: "rotate(-14 652 330)" }));
+  // head
+  head.appendChild(el("circle", { cx: 540, cy: 330, r: 118, fill: "#C9874B" }));
+  // curl hints
+  head.appendChild(el("circle", { cx: 466, cy: 244, r: 26, fill: "#C9874B" }));
+  head.appendChild(el("circle", { cx: 540, cy: 228, r: 30, fill: "#C9874B" }));
+  head.appendChild(el("circle", { cx: 614, cy: 244, r: 26, fill: "#C9874B" }));
+  // muzzle
+  head.appendChild(el("ellipse", { cx: 540, cy: 384, rx: 62, ry: 46, fill: "#F0D5A7" }));
+  head.appendChild(el("ellipse", { cx: 540, cy: 366, rx: 17, ry: 13, fill: "#15201C" }));
+
+  // eyes + brows + mouth per expression
+  const eyeY = 318;
+  function eye(cx, rPupil, rWhite) {
+    if (rWhite) g2.appendChild(el("circle", { cx, cy: eyeY, r: rWhite, fill: "#FBF3E4" }));
+    g2.appendChild(el("circle", { cx, cy: eyeY, r: rPupil, fill: "#3B2A1A" }));
+  }
+  const g2 = head;
+  if (expr === "shock") {
+    eye(498, 7, 20); eye(582, 7, 20);
+    g2.appendChild(el("path", { d: "M478 284 q20 -16 40 -6", stroke: "#8A5A2B", "stroke-width": 7, fill: "none", "stroke-linecap": "round" }));
+    g2.appendChild(el("path", { d: "M562 278 q20 -10 40 6", stroke: "#8A5A2B", "stroke-width": 7, fill: "none", "stroke-linecap": "round" }));
+    g2.appendChild(el("ellipse", { cx: 540, cy: 408, rx: 13, ry: 17, fill: "#5B3A22" }));
+  } else if (expr === "smile") {
+    g2.appendChild(el("path", { d: "M488 316 q10 -12 22 0", stroke: "#3B2A1A", "stroke-width": 8, fill: "none", "stroke-linecap": "round" }));
+    g2.appendChild(el("path", { d: "M570 316 q10 -12 22 0", stroke: "#3B2A1A", "stroke-width": 8, fill: "none", "stroke-linecap": "round" }));
+    g2.appendChild(el("path", { d: "M506 396 q34 30 68 0", stroke: "#5B3A22", "stroke-width": 8, fill: "none", "stroke-linecap": "round" }));
+    g2.appendChild(el("path", { d: "M528 402 q12 26 24 0 z", fill: "#9F4038" }));
+  } else if (expr === "stare") {
+    eye(498, 10); eye(582, 10);
+    g2.appendChild(el("path", { d: "M474 296 l48 12", stroke: "#8A5A2B", "stroke-width": 9, "stroke-linecap": "round" }));
+    g2.appendChild(el("path", { d: "M606 296 l-48 12", stroke: "#8A5A2B", "stroke-width": 9, "stroke-linecap": "round" }));
+    g2.appendChild(el("path", { d: "M516 402 h48", stroke: "#5B3A22", "stroke-width": 8, "stroke-linecap": "round" }));
+  } else { // serious & tilt share a face
+    eye(498, 10); eye(582, 10);
+    g2.appendChild(el("path", { d: "M478 292 q22 -12 44 -2", stroke: "#8A5A2B", "stroke-width": 8, fill: "none", "stroke-linecap": "round" }));
+    g2.appendChild(el("path", { d: "M558 288 q22 -6 44 8", stroke: "#8A5A2B", "stroke-width": 8, fill: "none", "stroke-linecap": "round" }));
+    g2.appendChild(el("path", { d: "M514 400 q26 10 52 0", stroke: "#5B3A22", "stroke-width": 8, fill: "none", "stroke-linecap": "round" }));
+  }
+
+  // visor
+  head.appendChild(el("path", { d: "M420 262 a124 124 0 0 1 240 0 l-18 14 a106 106 0 0 0 -204 0 z", fill: "#173B2F" }));
+  head.appendChild(el("path", { d: "M404 268 q136 -46 272 0 l-8 22 q-128 -42 -256 0 z", fill: "#1F5240" }));
+
+  g.appendChild(head);
+
+  // shoulders, shirt, tie (kept level even when head tilts)
+  g.appendChild(el("path", { d: "M400 560 q140 -120 280 0 z", fill: "#173B2F" }));
+  g.appendChild(el("path", { d: "M505 462 l35 30 35 -30 -10 98 h-50 z", fill: "#FBF3E4" }));
+  g.appendChild(el("path", { d: "M540 492 l-16 22 16 46 16 -46 z", fill: "#9F4038", transform: "rotate(6 540 492)" }));
+  g.appendChild(el("circle", { cx: 545, cy: 512, r: 5, fill: "#D9A441" }));
+  return g;
+}
+
+function render() {
+  const s = statement();
+  const expr = picked("expr", EXPRESSIONS).id;
+  const n = +intensity.value;
+  document.getElementById("meter").textContent = "●".repeat(n) + "○".repeat(5 - n);
+
+  card.textContent = "";
+
+  // ground
+  card.appendChild(el("rect", { width: 1080, height: 1080, fill: "#F6EBD8" }));
+  card.appendChild(el("rect", { x: 24, y: 24, width: 1032, height: 1032, fill: "none", stroke: "#173B2F", "stroke-width": 3 }));
+  card.appendChild(el("rect", { x: 34, y: 34, width: 1012, height: 1012, fill: "none", stroke: "#D9A441", "stroke-width": 1 }));
+
+  // masthead
+  card.appendChild(el("text", { x: 540, y: 92, "text-anchor": "middle", fill: "#9F4038",
+    "font-family": "Georgia, serif", "font-size": 26, "letter-spacing": 6 }, "FEDERAL TREAT RESERVE"));
+  card.appendChild(el("text", { x: 540, y: 126, "text-anchor": "middle", fill: "#4A5A50",
+    "font-family": "Georgia, serif", "font-size": 17, "letter-spacing": 4, "font-style": "italic" },
+    "FOR IMMEDIATE RELEASE · BARKWARD GUIDANCE"));
+  card.appendChild(el("line", { x1: 120, y1: 148, x2: 960, y2: 148, stroke: "#D8C6A4", "stroke-width": 2 }));
+
+  // Monty
+  card.appendChild(monty(expr));
+
+  // biscuit intensity row
+  for (let i = 0; i < 5; i++) {
+    const cx = 460 + i * 40;
+    card.appendChild(el("circle", { cx, cy: 560, r: 12,
+      fill: i < n ? "#D9A441" : "none", stroke: "#B07E27", "stroke-width": 2 }));
+  }
+
+  // statement text block: flow into a group, then auto-fit above the footer
+  const tg = el("g", {});
+  const START = 630, LIMIT = 950;
+  let y = START;
+
+  const headLines = wrapText(s.headline, "bold 50px Georgia", 880);
+  headLines.forEach(line => {
+    tg.appendChild(el("text", { x: 540, y, "text-anchor": "middle", fill: "#15201C",
+      "font-family": "Georgia, serif", "font-weight": "bold", "font-size": 50 }, line));
+    y += 58;
+  });
+  tg.appendChild(el("text", { x: 540, y, "text-anchor": "middle", fill: "#9F4038",
+    "font-family": "Georgia, serif", "font-size": 22, "letter-spacing": 4 }, s.sub));
+  y += 42;
+
+  const bodyLines = wrapText(s.body, "24px Georgia", 840);
+  bodyLines.forEach(line => {
+    tg.appendChild(el("text", { x: 540, y, "text-anchor": "middle", fill: "#3A4A40",
+      "font-family": "Georgia, serif", "font-size": 24 }, line));
+    y += 34;
+  });
+
+  y += 14;
+  tg.appendChild(el("text", { x: 540, y, "text-anchor": "middle", fill: "#173B2F",
+    "font-family": "Georgia, serif", "font-style": "italic", "font-size": 26 }, "“" + s.closer + "”"));
+
+  if (y > LIMIT) {
+    const sc = (LIMIT - START) / (y - START);
+    tg.setAttribute("transform", `translate(540 ${START - 40}) scale(${sc.toFixed(4)}) translate(-540 ${-(START - 40)})`);
+  }
+  card.appendChild(tg);
+
+  // footer
+  card.appendChild(el("line", { x1: 120, y1: 990, x2: 960, y2: 990, stroke: "#D8C6A4", "stroke-width": 2 }));
+  card.appendChild(el("text", { x: 540, y: 1022, "text-anchor": "middle", fill: "#4A5A50",
+    "font-family": "Georgia, serif", "font-size": 16, "letter-spacing": 3 },
+    "$DOLR · DOODLE OF LAST RESORT · UNOFFICIAL PARODY — NO AFFILIATION · NOT FINANCIAL ADVICE"));
+}
+
+/* ---------- actions ---------- */
+
+document.getElementById("randomize").addEventListener("click", () => {
+  const pick = (name, list) => {
+    const chosen = list[Math.floor(Math.random() * list.length)].id;
+    document.querySelector(`input[name="${name}"][value="${chosen}"]`).checked = true;
+  };
+  pick("expr", EXPRESSIONS); pick("event", EVENTS); pick("stance", STANCES); pick("cat", CATS);
+  intensity.value = 1 + Math.floor(Math.random() * 5);
+  render();
+});
+
+document.getElementById("download").addEventListener("click", () => {
+  const xml = new XMLSerializer().serializeToString(card);
+  const blob = new Blob([xml], { type: "image/svg+xml;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const img = new Image();
+  img.onload = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1080; canvas.height = 1080;
+    canvas.getContext("2d").drawImage(img, 0, 0, 1080, 1080);
+    URL.revokeObjectURL(url);
+    canvas.toBlob(png => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(png);
+      a.download = "dolr-barkward-guidance.png";
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }, "image/png");
+  };
+  img.src = url;
+});
+
+document.getElementById("copy").addEventListener("click", async () => {
+  const s = statement();
+  const text = `${s.headline}\n\n${s.body}\n\n“${s.closer}”\n\n$DOLR — unofficial parody. No affiliation. Not financial advice.`;
+  const msg = document.getElementById("copiedmsg");
+  try {
+    await navigator.clipboard.writeText(text);
+    msg.textContent = "Statement copied. The Committee thanks you, Governor.";
+  } catch {
+    msg.textContent = "Clipboard unavailable — select and copy from the card instead.";
+  }
+  setTimeout(() => { msg.textContent = ""; }, 4000);
+});
+
+render();
+</script>
+</body>
+</html>

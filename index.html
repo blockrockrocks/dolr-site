@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<title>Doodle of Last Resort — $DOLR</title>
+<style>
+  :root {
+    --evergreen: #173B2F;
+    --caramel: #C9874B;
+    --cream: #F0D5A7;
+    --parchment: #F6EBD8;
+    --gold: #D9A441;
+    --red: #9F4038;
+    --ink: #15201C;
+
+    --bg: var(--parchment);
+    --bg-raised: #FBF3E4;
+    --text: var(--ink);
+    --text-muted: #4A5A50;
+    --rule: #D8C6A4;
+    --panel: var(--evergreen);
+    --panel-text: var(--cream);
+    --panel-muted: #A9C0B0;
+    --accent: var(--red);
+    --accent-gold: #B07E27;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0F1F19;
+      --bg-raised: #16291F;
+      --text: #EFE3C8;
+      --text-muted: #A3B5A8;
+      --rule: #2B4237;
+      --panel: #132C22;
+      --panel-text: var(--cream);
+      --panel-muted: #90A898;
+      --accent: #C96A5D;
+      --accent-gold: var(--gold);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: var(--parchment);
+    --bg-raised: #FBF3E4;
+    --text: var(--ink);
+    --text-muted: #4A5A50;
+    --rule: #D8C6A4;
+    --panel: var(--evergreen);
+    --panel-text: var(--cream);
+    --panel-muted: #A9C0B0;
+    --accent: var(--red);
+    --accent-gold: #B07E27;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1F19;
+    --bg-raised: #16291F;
+    --text: #EFE3C8;
+    --text-muted: #A3B5A8;
+    --rule: #2B4237;
+    --panel: #132C22;
+    --panel-text: var(--cream);
+    --panel-muted: #90A898;
+    --accent: #C96A5D;
+    --accent-gold: var(--gold);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", Calibri, system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  .serif { font-family: "Playfair Display", Cambria, Georgia, "Times New Roman", serif; }
+
+  .ribbon {
+    background: var(--panel);
+    color: var(--panel-text);
+    text-align: center;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 0.55rem 1rem;
+  }
+  .ribbon strong { color: var(--gold); font-weight: 600; }
+
+  .ticker {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 2.2rem;
+    padding: 0.5rem 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .ticker span b { color: var(--text); font-weight: 600; }
+  .up { color: var(--accent); }
+  .steady { color: var(--accent-gold); }
+
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 0 1.25rem; }
+
+  header.hero { text-align: center; padding: 3.5rem 0 3rem; }
+  .emblem { width: 124px; height: 124px; margin: 0 auto 1.6rem; display: block; }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin: 0 0 1rem;
+  }
+  h1 {
+    font-family: Cambria, Georgia, "Times New Roman", serif;
+    font-size: clamp(2.1rem, 6vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin: 0 0 1.2rem;
+    text-wrap: balance;
+  }
+  .hero p.lede {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 34rem;
+    margin: 0 auto 2rem;
+    text-wrap: balance;
+  }
+  .btnrow { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  figure.heroart {
+    margin: 3rem auto 0;
+    max-width: 40rem;
+    padding: 0.75rem;
+    background: var(--bg-raised);
+    border: 1.5px solid var(--panel);
+  }
+  :root[data-theme="dark"] figure.heroart { border-color: var(--rule); }
+  @media (prefers-color-scheme: dark) { figure.heroart { border-color: var(--rule); } }
+  :root[data-theme="light"] figure.heroart { border-color: var(--panel); }
+  figure.heroart img {
+    display: block; width: 100%; height: auto;
+    border: 1px solid var(--gold);
+  }
+  figure.heroart figcaption {
+    font-size: 0.8rem; font-style: italic; color: var(--text-muted);
+    padding: 0.65rem 0.3rem 0.1rem; text-align: center;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1.5px solid var(--panel);
+    color: var(--text);
+    background: transparent;
+  }
+  :root[data-theme="dark"] .btn { border-color: var(--cream); }
+  @media (prefers-color-scheme: dark) { .btn { border-color: var(--cream); } }
+  :root[data-theme="light"] .btn { border-color: var(--panel); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #FBF3E4; }
+  .btn:hover { background: var(--panel); color: var(--panel-text); border-color: var(--panel); }
+  .btn.primary:hover { background: var(--panel); }
+  .btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+  section { padding: 2.8rem 0; border-top: 1px solid var(--rule); }
+  h2 {
+    font-family: Cambria, Georgia, "Times New Roman", serif;
+    font-size: 1.7rem;
+    line-height: 1.2;
+    margin: 0 0 0.4rem;
+    text-wrap: balance;
+  }
+  .kicker {
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin: 0 0 0.8rem;
+  }
+  p { max-width: 62ch; }
+  .muted { color: var(--text-muted); }
+
+  .mandate { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+  .mandate h3, .framework h3 {
+    font-family: Cambria, Georgia, serif;
+    font-size: 1.1rem;
+    margin: 0 0 0.35rem;
+  }
+  .mandate .num {
+    font-family: Cambria, Georgia, serif;
+    color: var(--accent-gold);
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .mandate p, .framework p { font-size: 0.95rem; color: var(--text-muted); margin: 0; }
+
+  .framework { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0 2rem; margin-top: 0.5rem; }
+  .framework div { padding: 1.1rem 0; border-bottom: 1px dotted var(--rule); }
+
+  .facts {
+    background: var(--panel);
+    color: var(--panel-text);
+    padding: 2.8rem 0;
+  }
+  .facts h2, .facts .kicker { color: inherit; }
+  .facts .kicker { color: var(--gold); }
+  .facts ul.nolist { list-style: none; padding: 0; margin: 1.2rem 0; display: grid; gap: 0.4rem; }
+  .facts ul.nolist li::before { content: "✕"; color: var(--gold); margin-right: 0.7rem; font-size: 0.85em; }
+  .facts p { color: var(--panel-muted); }
+
+  table.tokentable { width: 100%; border-collapse: collapse; margin-top: 1.2rem; font-variant-numeric: tabular-nums; }
+  .tablewrap { overflow-x: auto; }
+  table.tokentable th, table.tokentable td {
+    text-align: left;
+    padding: 0.55rem 0.75rem 0.55rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.95rem;
+  }
+  table.tokentable th {
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    width: 40%;
+  }
+
+  .notice {
+    border: 1.5px solid var(--accent);
+    padding: 1.3rem 1.5rem;
+    margin-top: 1.4rem;
+  }
+  .notice h3 {
+    margin: 0 0 0.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .notice p, .notice ul { font-size: 0.95rem; margin: 0.4rem 0; }
+  .notice ul { padding-left: 1.2rem; }
+
+  blockquote.statement {
+    margin: 1.5rem 0 0;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--gold);
+    font-family: Cambria, Georgia, serif;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    font-style: italic;
+  }
+  blockquote.statement cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-style: normal;
+    font-family: inherit;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  footer {
+    border-top: 3px double var(--rule);
+    padding: 2.5rem 0 3.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  footer p { max-width: 70ch; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    header.hero > * { animation: rise 0.7s ease both; }
+    header.hero > *:nth-child(2) { animation-delay: 0.08s; }
+    header.hero > *:nth-child(3) { animation-delay: 0.16s; }
+    header.hero > *:nth-child(4) { animation-delay: 0.24s; }
+    header.hero > *:nth-child(5) { animation-delay: 0.32s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon"><strong>Federal Treat Reserve</strong> · For immediate release · Unofficial parody — no affiliation</div>
+
+<div class="ticker">
+  <span>Treat rate <b class="steady">2 biscuits — HOLD</b></span>
+  <span>Treat Price Index <b class="up">+14% (chicken-led)</b></span>
+  <span>Sofa employment <b>Full</b></span>
+  <span>Market cat <b class="up">Disorderly</b></span>
+</div>
+
+<header class="hero wrap">
+  <img class="emblem" src="assets/logo-coin.png" width="256" height="256"
+       alt="Doodle of Last Resort coin logo: Monty the goldendoodle in a green visor and red tie on an evergreen coin ring reading DOODLE OF LAST RESORT, DOLR.">
+  <p class="eyebrow">Doodle of Last Resort · $DOLR</p>
+  <h1>The Doodle of Last Resort has arrived</h1>
+  <p class="lede">Markets requested clarity. Monty requested a biscuit. An unofficial monetary-policy parody featuring the fictional chairdog of the Federal Treat Reserve.</p>
+  <div class="btnrow">
+    <a class="btn primary" href="#committee">Join the Committee</a>
+    <a class="btn" href="#facts">Launch facts</a>
+    <a class="btn" href="meme.html">Create a meme</a>
+  </div>
+  <figure class="heroart">
+    <img src="assets/hero.jpg" width="1536" height="1024"
+         alt="Monty Doodle, a cartoon goldendoodle in a green visor and waistcoat, seated at the Federal Treat Reserve desk with one paw on the RATE lever beside an open emergency biscuit tin, while an alarmed orange cat looks on.">
+    <figcaption>The Chairdog at his desk, moments after the market cat became disorderly.</figcaption>
+  </figure>
+</header>
+
+<section class="wrap">
+  <p class="kicker">Meet the chairdog</p>
+  <h2>Montgomery “Monty” Doodle</h2>
+  <p>Monty was appointed after falling asleep on an economic report and accidentally calming the market. He now oversees stable treat prices, maximum belly rubs and emergency biscuit liquidity.</p>
+  <p>His decisions are data-dependent. Monty is treat-dependent.</p>
+  <blockquote class="statement">
+    “The Committee remains strongly committed to price stability. Also, somebody said chicken.”
+    <cite>— Barkward Guidance, Federal Open Market Canines</cite>
+  </blockquote>
+</section>
+
+<section class="wrap">
+  <p class="kicker">The mandate</p>
+  <h2>Two objectives. One emergency biscuit tin.</h2>
+  <div class="mandate">
+    <div>
+      <span class="num">I.</span>
+      <h3>Stable treat prices</h3>
+      <p>Monty monitors the Treat Price Index and remains prepared to act.</p>
+    </div>
+    <div>
+      <span class="num">II.</span>
+      <h3>Maximum belly rubs</h3>
+      <p>Every good boy deserves full sofa employment.</p>
+    </div>
+    <div>
+      <span class="num">III.</span>
+      <h3>Orderly markets</h3>
+      <p>When the market cat becomes disorderly, Monty activates the emergency biscuit facility.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="framework">
+  <p class="kicker">The policy framework</p>
+  <h2>Instruments of the Treat Reserve</h2>
+  <div class="framework">
+    <div>
+      <h3>Barkward Guidance</h3>
+      <p>Officially unofficial statements from the Chairdog.</p>
+    </div>
+    <div>
+      <h3>Federal Open Market Canines</h3>
+      <p>Community votes on entirely fictional policy decisions.</p>
+    </div>
+    <div>
+      <h3>Quantitative Eating</h3>
+      <p>An unconventional policy tool involving expanded biscuit consumption.</p>
+    </div>
+    <div>
+      <h3>The Beige Bark</h3>
+      <p>A community-generated report on economic conditions, squirrels and available sofas.</p>
+    </div>
+  </div>
+</section>
+
+<div class="facts" id="facts">
+  <div class="wrap">
+    <p class="kicker">Launch facts</p>
+    <h2>What this launch is not</h2>
+    <ul class="nolist">
+      <li>No private presale</li>
+      <li>No undisclosed allocations</li>
+      <li>No hidden wallets</li>
+      <li>No guaranteed return</li>
+      <li>No fake endorsement</li>
+    </ul>
+    <p>$DOLR launches as a fixed-supply ERC-20 paired with native ETH in a public Uniswap v4 pool on Robinhood Chain. The pool is created and funded in one atomic transaction at a disclosed starting price, and the full allocation — pool liquidity versus disclosed treasury — is published before launch.</p>
+  </div>
+</div>
+
+<section class="wrap">
+  <p class="kicker">Token information</p>
+  <h2>Terms of the instrument</h2>
+  <div class="tablewrap">
+    <table class="tokentable">
+      <tr><th scope="row">Name</th><td>Doodle of Last Resort</td></tr>
+      <tr><th scope="row">Ticker</th><td>$DOLR</td></tr>
+      <tr><th scope="row">Network</th><td>Robinhood Chain</td></tr>
+      <tr><th scope="row">Supply</th><td>1,000,000,000 — fixed, no further minting</td></tr>
+      <tr><th scope="row">Pair</th><td>DOLR / native ETH · Uniswap v4 · no hook</td></tr>
+      <tr><th scope="row">Pool fee</th><td>1%</td></tr>
+      <tr><th scope="row">Allocation</th><td>90% pool liquidity · 10% disclosed treasury · LP locked 12 months</td></tr>
+      <tr><th scope="row">Contract</th><td>[Published at launch — verify on this site only]</td></tr>
+      <tr><th scope="row">Wallets</th><td>Deployer · treasury · LP owner — [published before launch]</td></tr>
+    </table>
+  </div>
+  <p class="muted" style="margin-top:1rem">Crypto assets are volatile. $DOLR may lose some or all of its value. The token has no transfer tax; the pool’s 1% swap fee accrues to the disclosed liquidity position under Uniswap v4 rules, and all wallet activity is visible on-chain.</p>
+</section>
+
+<section class="wrap" id="committee">
+  <p class="kicker">Community</p>
+  <h2>The Committee is now in session</h2>
+  <p>The Committee does not coordinate purchases or prices. It creates memes, fictional forecasts, stickers, policy statements, economic explainers and Monty lore.</p>
+  <p>Weekly fixtures: the Treat Price Index, FOMC votes on fictional policy, Barkward Guidance press conferences and the Beige Bark report.</p>
+</section>
+
+<section class="wrap">
+  <p class="kicker">Risks &amp; security</p>
+  <h2>Read before participating</h2>
+  <p>$DOLR is experimental and highly speculative. The token has no guaranteed value, redemption right, profit, yield, price floor or promised utility. Smart-contract, liquidity, market, regulatory, operational and cybersecurity risks may result in partial or total loss.</p>
+  <div class="notice">
+    <h3>Anti-scam warning</h3>
+    <p>The official contract will be displayed only on this website and the project’s verified social account. Administrators will never:</p>
+    <ul>
+      <li>request a seed phrase;</li>
+      <li>send unsolicited direct messages;</li>
+      <li>promise guaranteed returns;</li>
+      <li>ask you to send tokens for an airdrop;</li>
+      <li>provide a secret presale link.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><a href="transparency.html" style="color:inherit">Transparency</a> · <a href="faq.html" style="color:inherit">FAQ</a> · <a href="meme.html" style="color:inherit">Meme generator</a> · <a href="tpi.html" style="color:inherit">Treat Price Index</a></p>
+    <p><strong>Unofficial-parody statement.</strong> Doodle of Last Resort is an independent, unofficial parody using an original fictional character. It is not affiliated with, sponsored by, endorsed by or connected to the Federal Reserve System, any Federal Reserve official or family member, TAW Ventures, Estée Lauder Companies, Robinhood Markets, Uniswap Labs or any other referenced organization. Monty is fictional and is not intended to depict any real animal.</p>
+    <p>Nothing on this page is financial, investment, legal or tax advice.</p>
+  </div>
+</footer>
+
+</body>
+</html>

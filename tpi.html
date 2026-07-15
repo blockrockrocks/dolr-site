@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<title>Treat Price Index — $DOLR</title>
+<style>
+  :root {
+    --evergreen: #173B2F;
+    --cream: #F0D5A7;
+    --parchment: #F6EBD8;
+    --gold: #D9A441;
+    --red: #9F4038;
+    --ink: #15201C;
+
+    --bg: var(--parchment);
+    --bg-raised: #FBF3E4;
+    --text: var(--ink);
+    --text-muted: #4A5A50;
+    --rule: #D8C6A4;
+    --panel: var(--evergreen);
+    --panel-text: var(--cream);
+    --accent: var(--red);
+    --accent-gold: #B07E27;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0F1F19; --bg-raised: #16291F; --text: #EFE3C8;
+      --text-muted: #A3B5A8; --rule: #2B4237; --panel: #132C22;
+      --panel-text: var(--cream); --accent: #C96A5D; --accent-gold: var(--gold);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: var(--parchment); --bg-raised: #FBF3E4; --text: var(--ink);
+    --text-muted: #4A5A50; --rule: #D8C6A4; --panel: var(--evergreen);
+    --panel-text: var(--cream); --accent: var(--red); --accent-gold: #B07E27;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1F19; --bg-raised: #16291F; --text: #EFE3C8;
+    --text-muted: #A3B5A8; --rule: #2B4237; --panel: #132C22;
+    --panel-text: var(--cream); --accent: #C96A5D; --accent-gold: var(--gold);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", Calibri, system-ui, sans-serif;
+    font-size: 1rem; line-height: 1.55;
+  }
+  .ribbon {
+    background: var(--panel); color: var(--panel-text); text-align: center;
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    padding: 0.55rem 1rem;
+  }
+  .ribbon strong { color: var(--gold); font-weight: 600; }
+  .wrap { max-width: 72rem; margin: 0 auto; padding: 0 1.25rem; }
+
+  header.top { text-align: center; padding: 2.2rem 0 1.6rem; }
+  .eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--accent-gold); margin: 0 0 0.6rem;
+  }
+  h1 {
+    font-family: Cambria, Georgia, "Times New Roman", serif;
+    font-size: clamp(1.7rem, 4.5vw, 2.5rem); line-height: 1.1; margin: 0 0 0.6rem;
+    text-wrap: balance;
+  }
+  header.top p { color: var(--text-muted); max-width: 40rem; margin: 0 auto; }
+
+  .studio {
+    display: grid;
+    grid-template-columns: minmax(19rem, 26rem) minmax(0, 1fr);
+    gap: 2rem; padding: 1rem 0 3.5rem; align-items: start;
+  }
+  @media (max-width: 56rem) { .studio { grid-template-columns: 1fr; } }
+
+  .itemrow { margin-bottom: 1.05rem; }
+  .itemrow .head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 0.9rem; margin-bottom: 0.15rem;
+  }
+  .itemrow .head .w { color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.08em; }
+  .itemrow .val { font-variant-numeric: tabular-nums; font-weight: 600; min-width: 4.2rem; text-align: right; }
+  .itemrow .val.up { color: var(--accent); }
+  .itemrow .val.down { color: var(--accent-gold); }
+  .slider-row { display: flex; align-items: center; gap: 0.8rem; }
+  input[type="range"] { flex: 1; accent-color: var(--accent); }
+
+  label.datelab {
+    display: block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent-gold); margin: 1.4rem 0 0.4rem;
+  }
+  input[type="date"] {
+    font: inherit; padding: 0.4rem 0.6rem; background: var(--bg-raised);
+    color: var(--text); border: 1px solid var(--rule);
+  }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.6rem; }
+  .btn {
+    font: inherit; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.65rem 1.2rem; cursor: pointer;
+    border: 1.5px solid var(--panel); background: transparent; color: var(--text);
+  }
+  @media (prefers-color-scheme: dark) { .btn { border-color: var(--cream); } }
+  :root[data-theme="light"] .btn { border-color: var(--panel); }
+  :root[data-theme="dark"] .btn { border-color: var(--cream); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #FBF3E4; }
+  .btn:hover { background: var(--panel); color: var(--panel-text); border-color: var(--panel); }
+  .btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .hint { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.7rem; }
+  .hint a { color: inherit; }
+  .copiedmsg { font-size: 0.8rem; color: var(--accent-gold); margin-top: 0.5rem; min-height: 1.2em; }
+
+  .cardbox { position: sticky; top: 1.5rem; }
+  #tpicard {
+    width: 100%; height: auto; display: block;
+    border: 1px solid var(--rule);
+    box-shadow: 0 10px 30px rgba(21, 32, 28, 0.18);
+    background: #F6EBD8;
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon"><strong>Federal Treat Reserve</strong> · Bureau of Treat Statistics · Unofficial parody — no affiliation</div>
+
+<header class="top wrap">
+  <a href="index.html" style="display:block;width:76px;margin:0 auto 0.9rem"><img src="assets/logo-coin.png" width="256" height="256" style="width:76px;height:76px;display:block" alt="DOLR coin logo — back to home"></a>
+  <p class="eyebrow">Treat Price Index</p>
+  <h1>This week's official treatflation reading</h1>
+  <p>Set the weekly price changes for the basket. The Bureau compiles the headline number, Monty reacts, and the card is ready to share. All data is fictional and biscuit-adjusted.</p>
+</header>
+
+<main class="wrap studio">
+  <form id="controls">
+    <div id="items"></div>
+
+    <label class="datelab" for="week">Week ending</label>
+    <input type="date" id="week">
+
+    <div class="actions">
+      <button type="button" class="btn primary" id="randomize">Let the data sniff itself</button>
+      <button type="button" class="btn" id="download">Download PNG</button>
+      <button type="button" class="btn" id="copy">Copy release text</button>
+    </div>
+    <p class="copiedmsg" id="copiedmsg" role="status"></p>
+    <p class="hint"><a href="index.html">← Back to the Federal Treat Reserve</a> · <a href="meme.html">Meme generator</a></p>
+  </form>
+
+  <div class="cardbox">
+    <svg id="tpicard" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Treat Price Index weekly infographic"></svg>
+  </div>
+</main>
+
+<script>
+"use strict";
+
+/* Basket: name, weight, default weekly change (%) */
+const BASKET = [
+  { id: "chicken",  name: "Chicken biscuits",        weight: 0.40, value:  4.0 },
+  { id: "balls",    name: "Tennis balls",            weight: 0.20, value:  1.5 },
+  { id: "grooming", name: "Grooming",                weight: 0.15, value:  0.5 },
+  { id: "sofa",     name: "Sofa space",              weight: 0.15, value: -1.0 },
+  { id: "squirrel", name: "Squirrel-detection costs", weight: 0.10, value:  8.0 },
+];
+
+const UP = "#9F4038";     /* treatflation — statement red  */
+const DOWN = "#B07E27";   /* cooling — reserve gold        */
+const INK = "#15201C", MUTED = "#4A5A50", RULE = "#D8C6A4";
+
+/* ---------- controls ---------- */
+
+const itemsBox = document.getElementById("items");
+BASKET.forEach(item => {
+  const row = document.createElement("div");
+  row.className = "itemrow";
+  row.innerHTML =
+    `<div class="head"><span>${item.name} <span class="w">(weight ${Math.round(item.weight * 100)}%)</span></span>` +
+    `<span class="val" id="val-${item.id}"></span></div>` +
+    `<div class="slider-row"><input type="range" id="in-${item.id}" min="-20" max="20" step="0.5" value="${item.value}" aria-label="${item.name} weekly change, percent"></div>`;
+  itemsBox.appendChild(row);
+  row.querySelector("input").addEventListener("input", render);
+});
+
+const week = document.getElementById("week");
+week.value = new Date().toISOString().slice(0, 10);
+week.addEventListener("change", render);
+
+function readBasket() {
+  return BASKET.map(it => ({ ...it, value: +document.getElementById("in-" + it.id).value }));
+}
+function headlineOf(basket) {
+  return basket.reduce((s, it) => s + it.weight * it.value, 0);
+}
+function fmt(v) { return (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(1) + "%"; }
+
+function commentary(h) {
+  if (h > 5)  return "Treatflation is running hot. Emergency peanut-butter discussions have begun.";
+  if (h > 2)  return "Treat prices rose above target. Governor Hawk has requested another meeting.";
+  if (h >= 0) return "Broadly consistent with the two-biscuit target. The Committee remains vigilant and extremely hungry.";
+  if (h >= -2) return "Treat prices moderated. One month is not a trend. Two biscuits are not a meal.";
+  return "Treatflation is cooling rapidly. Governor Dove demands immediate biscuits.";
+}
+
+function weekLabel() {
+  const d = new Date(week.value + "T12:00:00");
+  if (isNaN(d)) return "THIS WEEK";
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }).toUpperCase();
+}
+
+/* ---------- card ---------- */
+
+const SVGNS = "http://www.w3.org/2000/svg";
+const card = document.getElementById("tpicard");
+const measurer = document.createElement("canvas").getContext("2d");
+
+function el(name, attrs, text) {
+  const node = document.createElementNS(SVGNS, name);
+  for (const k in attrs) node.setAttribute(k, attrs[k]);
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+function wrapText(str, font, maxWidth) {
+  measurer.font = font;
+  const words = str.split(" "), lines = [];
+  let line = "";
+  for (const w of words) {
+    const t = line ? line + " " + w : w;
+    if (measurer.measureText(t).width > maxWidth && line) { lines.push(line); line = w; }
+    else line = t;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+/* horizontal bar with 4px-rounded data end, flat baseline end */
+function barPath(x0, x1, y, h) {
+  const r = Math.min(4, Math.abs(x1 - x0));
+  if (x1 >= x0) {
+    return `M ${x0} ${y} L ${x1 - r} ${y} Q ${x1} ${y} ${x1} ${y + r} L ${x1} ${y + h - r} Q ${x1} ${y + h} ${x1 - r} ${y + h} L ${x0} ${y + h} Z`;
+  }
+  return `M ${x0} ${y} L ${x1 + r} ${y} Q ${x1} ${y} ${x1} ${y + r} L ${x1} ${y + h - r} Q ${x1} ${y + h} ${x1 + r} ${y + h} L ${x0} ${y + h} Z`;
+}
+
+function render() {
+  const basket = readBasket();
+  const h = headlineOf(basket);
+
+  basket.forEach(it => {
+    const v = document.getElementById("val-" + it.id);
+    v.textContent = fmt(it.value);
+    v.className = "val " + (it.value > 0 ? "up" : it.value < 0 ? "down" : "");
+  });
+
+  card.textContent = "";
+  card.appendChild(el("rect", { width: 1080, height: 1080, fill: "#F6EBD8" }));
+  card.appendChild(el("rect", { x: 24, y: 24, width: 1032, height: 1032, fill: "none", stroke: "#173B2F", "stroke-width": 3 }));
+  card.appendChild(el("rect", { x: 34, y: 34, width: 1012, height: 1012, fill: "none", stroke: "#D9A441", "stroke-width": 1 }));
+
+  card.appendChild(el("text", { x: 540, y: 92, "text-anchor": "middle", fill: "#9F4038",
+    "font-family": "Georgia, serif", "font-size": 26, "letter-spacing": 6 }, "FEDERAL TREAT RESERVE"));
+  card.appendChild(el("text", { x: 540, y: 126, "text-anchor": "middle", fill: MUTED,
+    "font-family": "Georgia, serif", "font-size": 17, "letter-spacing": 4, "font-style": "italic" },
+    "TREAT PRICE INDEX · WEEK ENDING " + weekLabel()));
+  card.appendChild(el("line", { x1: 120, y1: 148, x2: 960, y2: 148, stroke: RULE, "stroke-width": 2 }));
+
+  /* hero number */
+  card.appendChild(el("text", { x: 540, y: 200, "text-anchor": "middle", fill: MUTED,
+    "font-family": "Georgia, serif", "font-size": 18, "letter-spacing": 5 }, "HEADLINE TREATFLATION, WEEK ON WEEK"));
+  card.appendChild(el("text", { x: 540, y: 305, "text-anchor": "middle", fill: INK,
+    "font-family": "Georgia, serif", "font-weight": "bold", "font-size": 104 }, fmt(h)));
+  /* direction marker beside the number, in the pole color */
+  const numW = measurer.font = "bold 104px Georgia", w2 = measurer.measureText(fmt(h)).width / 2;
+  if (Math.abs(h) >= 0.05) {
+    const tx = 540 + w2 + 36, dirUp = h > 0;
+    card.appendChild(el("path", {
+      d: dirUp ? `M ${tx - 16} 296 L ${tx + 16} 296 L ${tx} 266 Z`
+               : `M ${tx - 16} 272 L ${tx + 16} 272 L ${tx} 302 Z`,
+      fill: dirUp ? UP : DOWN }));
+  }
+  card.appendChild(el("text", { x: 540, y: 348, "text-anchor": "middle", fill: MUTED,
+    "font-family": "Georgia, serif", "font-size": 19, "font-style": "italic" },
+    "Core TPI: 0.0%*"));
+
+  /* chart: diverging bars, zero at x=640, 15 px per percent, ±20% domain */
+  const x0 = 640, pxPer = 15, top = 420, rowH = 66, barH = 30;
+
+  /* recessive grid */
+  for (const g of [-15, -10, -5, 5, 10, 15]) {
+    const gx = x0 + g * pxPer;
+    card.appendChild(el("line", { x1: gx, y1: top - 26, x2: gx, y2: top + BASKET.length * rowH - 20, stroke: RULE, "stroke-width": 1 }));
+    card.appendChild(el("text", { x: gx, y: top - 36, "text-anchor": "middle", fill: MUTED,
+      "font-family": "Georgia, serif", "font-size": 14 }, (g > 0 ? "+" : "−") + Math.abs(g) + "%"));
+  }
+  /* zero axis */
+  card.appendChild(el("line", { x1: x0, y1: top - 26, x2: x0, y2: top + BASKET.length * rowH - 20, stroke: MUTED, "stroke-width": 2 }));
+
+  basket.forEach((it, i) => {
+    const y = top + i * rowH;
+    /* item label, right-aligned into the left margin */
+    card.appendChild(el("text", { x: 320, y: y + barH / 2 + 1, "text-anchor": "end", fill: INK,
+      "font-family": "Georgia, serif", "font-size": 21 }, it.name));
+    card.appendChild(el("text", { x: 320, y: y + barH / 2 + 21, "text-anchor": "end", fill: MUTED,
+      "font-family": "Georgia, serif", "font-size": 13 }, "weight " + Math.round(it.weight * 100) + "%"));
+
+    const xEnd = x0 + it.value * pxPer;
+    if (Math.abs(it.value) < 0.05) {
+      card.appendChild(el("circle", { cx: x0, cy: y + barH / 2, r: 5, fill: MUTED }));
+    } else {
+      const bar = el("path", { d: barPath(x0, xEnd, y, barH), fill: it.value > 0 ? UP : DOWN });
+      const tip = el("title", {}, `${it.name}: ${fmt(it.value)} (weight ${Math.round(it.weight * 100)}%)`);
+      bar.appendChild(tip);
+      card.appendChild(bar);
+    }
+    /* value label above the data end, clear of the item-name column */
+    const lx = xEnd + (it.value >= 0 ? 2 : -2);
+    card.appendChild(el("text", { x: lx, y: y - 7,
+      "text-anchor": it.value >= 0 ? "start" : "end", fill: it.value > 0 ? UP : it.value < 0 ? DOWN : MUTED,
+      "font-family": "Georgia, serif", "font-weight": "bold", "font-size": 20 }, fmt(it.value)));
+  });
+
+  /* commentary */
+  let cy = top + BASKET.length * rowH + 46;
+  const lines = wrapText("“" + commentary(h) + "”", "italic 27px Georgia", 800);
+  lines.forEach(line => {
+    card.appendChild(el("text", { x: 540, y: cy, "text-anchor": "middle", fill: "#173B2F",
+      "font-family": "Georgia, serif", "font-style": "italic", "font-size": 27 }, line));
+    cy += 38;
+  });
+  card.appendChild(el("text", { x: 540, y: cy + 12, "text-anchor": "middle", fill: MUTED,
+    "font-family": "Georgia, serif", "font-size": 15, "font-style": "italic" },
+    "*Core excludes food, toys and everything Monty cares about."));
+
+  card.appendChild(el("line", { x1: 120, y1: 990, x2: 960, y2: 990, stroke: RULE, "stroke-width": 2 }));
+  card.appendChild(el("text", { x: 540, y: 1022, "text-anchor": "middle", fill: MUTED,
+    "font-family": "Georgia, serif", "font-size": 16, "letter-spacing": 3 },
+    "$DOLR · FICTIONAL DATA · UNOFFICIAL PARODY — NO AFFILIATION · NOT FINANCIAL ADVICE"));
+}
+
+/* ---------- actions ---------- */
+
+document.getElementById("randomize").addEventListener("click", () => {
+  BASKET.forEach(it => {
+    const skew = it.id === "squirrel" ? 2 : 0; /* squirrel costs trend up */
+    document.getElementById("in-" + it.id).value = (Math.round((Math.random() * 20 - 8 + skew) * 2) / 2).toFixed(1);
+  });
+  render();
+});
+
+document.getElementById("download").addEventListener("click", () => {
+  const xml = new XMLSerializer().serializeToString(card);
+  const blob = new Blob([xml], { type: "image/svg+xml;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const img = new Image();
+  img.onload = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1080; canvas.height = 1080;
+    canvas.getContext("2d").drawImage(img, 0, 0, 1080, 1080);
+    URL.revokeObjectURL(url);
+    canvas.toBlob(png => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(png);
+      a.download = "dolr-treat-price-index.png";
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }, "image/png");
+  };
+  img.src = url;
+});
+
+document.getElementById("copy").addEventListener("click", async () => {
+  const basket = readBasket();
+  const h = headlineOf(basket);
+  const rows = basket.map(it => `${it.name}: ${fmt(it.value)}`).join("\n");
+  const text = `TREAT PRICE INDEX — week ending ${weekLabel()}\n\nHeadline treatflation: ${fmt(h)}\nCore TPI: 0.0% (excludes food, toys and everything Monty cares about)\n\n${rows}\n\n“${commentary(h)}”\n\n$DOLR — fictional data. Unofficial parody. No affiliation. Not financial advice.`;
+  const msg = document.getElementById("copiedmsg");
+  try {
+    await navigator.clipboard.writeText(text);
+    msg.textContent = "Release copied. The Bureau thanks you, Governor.";
+  } catch {
+    msg.textContent = "Clipboard unavailable — select and copy from the card instead.";
+  }
+  setTimeout(() => { msg.textContent = ""; }, 4000);
+});
+
+render();
+</script>
+</body>
+</html>

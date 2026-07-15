@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<title>Transparency — $DOLR</title>
+<style>
+  :root {
+    --evergreen: #173B2F;
+    --caramel: #C9874B;
+    --cream: #F0D5A7;
+    --parchment: #F6EBD8;
+    --gold: #D9A441;
+    --red: #9F4038;
+    --ink: #15201C;
+
+    --bg: var(--parchment);
+    --bg-raised: #FBF3E4;
+    --text: var(--ink);
+    --text-muted: #4A5A50;
+    --rule: #D8C6A4;
+    --panel: var(--evergreen);
+    --panel-text: var(--cream);
+    --accent: var(--red);
+    --accent-gold: #B07E27;
+    --ok: #2E6B4F;
+    --pending-bg: #EFE0BC;
+    --pending-text: #7A5A18;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0F1F19; --bg-raised: #16291F; --text: #EFE3C8;
+      --text-muted: #A3B5A8; --rule: #2B4237; --panel: #132C22;
+      --panel-text: var(--cream); --accent: #C96A5D; --accent-gold: var(--gold);
+      --ok: #6FBF97; --pending-bg: #33301E; --pending-text: #D9B45E;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: var(--parchment); --bg-raised: #FBF3E4; --text: var(--ink);
+    --text-muted: #4A5A50; --rule: #D8C6A4; --panel: var(--evergreen);
+    --panel-text: var(--cream); --accent: var(--red); --accent-gold: #B07E27;
+    --ok: #2E6B4F; --pending-bg: #EFE0BC; --pending-text: #7A5A18;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1F19; --bg-raised: #16291F; --text: #EFE3C8;
+    --text-muted: #A3B5A8; --rule: #2B4237; --panel: #132C22;
+    --panel-text: var(--cream); --accent: #C96A5D; --accent-gold: var(--gold);
+    --ok: #6FBF97; --pending-bg: #33301E; --pending-text: #D9B45E;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", Calibri, system-ui, sans-serif;
+    font-size: 1rem; line-height: 1.55;
+  }
+  .ribbon {
+    background: var(--panel); color: var(--panel-text); text-align: center;
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    padding: 0.55rem 1rem;
+  }
+  .ribbon strong { color: var(--gold); font-weight: 600; }
+  .wrap { max-width: 50rem; margin: 0 auto; padding: 0 1.25rem; }
+
+  header.top { text-align: center; padding: 2.2rem 0 0.5rem; }
+  .eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--accent-gold); margin: 0 0 0.6rem;
+  }
+  h1 {
+    font-family: Cambria, Georgia, "Times New Roman", serif;
+    font-size: clamp(1.7rem, 4.5vw, 2.4rem); line-height: 1.12; margin: 0 0 0.6rem;
+    text-wrap: balance;
+  }
+  header.top p { color: var(--text-muted); max-width: 38rem; margin: 0 auto; }
+  .updated {
+    text-align: center; font-size: 0.78rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--text-muted); margin: 1rem 0 0;
+  }
+
+  section { padding: 1.8rem 0 0.4rem; }
+  h2 {
+    font-family: Cambria, Georgia, serif; font-size: 1.25rem; margin: 0 0 0.2rem;
+    padding-bottom: 0.4rem; border-bottom: 2px solid var(--rule);
+  }
+  .tablewrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td {
+    text-align: left; padding: 0.6rem 0.9rem 0.6rem 0;
+    border-bottom: 1px solid var(--rule); font-size: 0.93rem; vertical-align: top;
+  }
+  th {
+    font-weight: 500; color: var(--text-muted); text-transform: uppercase;
+    font-size: 0.7rem; letter-spacing: 0.13em; width: 34%; white-space: nowrap;
+  }
+  td.value { width: 46%; }
+  code, .mono {
+    font-family: Consolas, "Cascadia Mono", Menlo, monospace;
+    font-size: 0.86em; word-break: break-all;
+  }
+  .pill {
+    display: inline-block; font-size: 0.68rem; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 0.18rem 0.6rem; white-space: nowrap;
+    border: 1px solid currentColor;
+  }
+  .pill.live { color: var(--ok); }
+  .pill.pending { color: var(--pending-text); background: var(--pending-bg); border-color: transparent; }
+  .pill.launch { color: var(--accent); }
+
+  .note {
+    background: var(--bg-raised); border-left: 3px solid var(--gold);
+    padding: 0.9rem 1.1rem; font-size: 0.9rem; color: var(--text-muted);
+    margin: 1.2rem 0 0;
+  }
+  footer {
+    border-top: 3px double var(--rule); margin-top: 2.5rem;
+    padding: 1.8rem 0 3rem; font-size: 0.85rem; color: var(--text-muted);
+  }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+
+<div class="ribbon"><strong>Federal Treat Reserve</strong> · Office of Disclosure · Unofficial parody — no affiliation</div>
+
+<header class="top wrap">
+  <a href="index.html" style="display:block;width:76px;margin:0 auto 0.9rem"><img src="assets/logo-coin.png" width="256" height="256" style="width:76px;height:76px;display:block" alt="DOLR coin logo — back to home"></a>
+  <p class="eyebrow">Transparency dashboard</p>
+  <h1>Every claim, verifiable on-chain</h1>
+  <p>This page lists everything the project discloses. Anything not listed here and on the verified social account should be treated as fake. Values marked “at launch” are published the moment the token is created.</p>
+  <p class="updated">Last updated: [DATE] · Status: pre-launch — no token exists yet</p>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <h2>Token</h2>
+    <div class="tablewrap"><table>
+      <tr><th scope="row">Name / ticker</th><td class="value">Doodle of Last Resort · $DOLR</td><td><span class="pill live">Published</span></td></tr>
+      <tr><th scope="row">Network</th><td class="value">Robinhood Chain</td><td><span class="pill live">Published</span></td></tr>
+      <tr><th scope="row">Token contract</th><td class="value"><code>[PUBLISHED AT LAUNCH]</code></td><td><span class="pill launch">At launch</span></td></tr>
+      <tr><th scope="row">Total supply</th><td class="value">1,000,000,000 — minted once; the contract has no owner, no minting, no taxes, no pause, no blacklist, no proxy</td><td><span class="pill live">Published</span></td></tr>
+      <tr><th scope="row">Allocation into liquidity</th><td class="value">900,000,000 (90%)</td><td><span class="pill live">Published</span></td></tr>
+      <tr><th scope="row">Retained by treasury</th><td class="value">100,000,000 (10%) — held in the disclosed treasury wallet</td><td><span class="pill live">Published</span></td></tr>
+      <tr><th scope="row">Verified source code</th><td class="value"><code>[BLOCKSCOUT LINK]</code></td><td><span class="pill launch">At launch</span></td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Pool (Uniswap v4)</h2>
+    <div class="tablewrap"><table>
+      <tr><th scope="row">Pair</th><td class="value">DOLR / native ETH</td><td><span class="pill live">Published</span></td></tr>
+      <tr><th scope="row">Fee tier</th><td class="value">1% (10,000 pips), tick spacing 200</td><td><span class="pill live">Published</span></td></tr>
+      <tr><th scope="row">Hook</th><td class="value">None (zero address)</td><td><span class="pill live">Published</span></td></tr>
+      <tr><th scope="row">Initial position</th><td class="value">Full range, created and funded in one atomic transaction</td><td><span class="pill live">Published</span></td></tr>
+      <tr><th scope="row">PoolId</th><td class="value"><code>[PUBLISHED AT LAUNCH]</code></td><td><span class="pill launch">At launch</span></td></tr>
+      <tr><th scope="row">Initial ETH / DOLR amounts</th><td class="value">10 ETH + 900,000,000 DOLR (implied starting FDV ≈ 11.11 ETH)</td><td><span class="pill live">Published</span></td></tr>
+      <tr><th scope="row">LP position NFT (ID + owner)</th><td class="value"><code>[PUBLISHED AT LAUNCH]</code></td><td><span class="pill launch">At launch</span></td></tr>
+      <tr><th scope="row">LP lock terms</th><td class="value">12 months in a minimal verified timelock (immutable beneficiary + unlock date, no admin functions). Swap fees accrue inside the position and are claimable only after unlock. “Locked” is claimed only once the NFT is verifiably owned by the timelock. Contract address: <code>[PUBLISHED BEFORE LAUNCH]</code></td><td><span class="pill pending">Contract pending</span></td></tr>
+      <tr><th scope="row">Uniswap v4 PoolManager</th><td class="value"><code>0x8366a39cc670b4001a1121b8f6a443a643e40951</code></td><td><span class="pill live">Verified 2026-07-14</span></td></tr>
+      <tr><th scope="row">Uniswap v4 PositionManager</th><td class="value"><code>0x58daec3116aae6d93017baaea7749052e8a04fa7</code></td><td><span class="pill live">Verified 2026-07-14</span></td></tr>
+    </table></div>
+    <p class="note">The token has no transfer tax. The pool’s 1% swap fee accrues to the LP position NFT; the fee-claim policy is published here before launch. The project does not promise buybacks, burns, price support or holder fee distributions. Pool mechanics are determined by the Uniswap v4 contracts, not by project statements.</p>
+  </section>
+
+  <section>
+    <h2>Wallets</h2>
+    <div class="tablewrap"><table>
+      <tr><th scope="row">Deployer wallet</th><td class="value"><code>[PUBLISHED BEFORE LAUNCH]</code> — holds nothing after launch</td><td><span class="pill pending">Pending</span></td></tr>
+      <tr><th scope="row">Treasury wallet</th><td class="value"><code>[PUBLISHED BEFORE LAUNCH]</code> — receives the retained allocation</td><td><span class="pill pending">Pending</span></td></tr>
+      <tr><th scope="row">LP owner / timelock</th><td class="value"><code>[PUBLISHED BEFORE LAUNCH]</code> — holds the position NFT</td><td><span class="pill pending">Pending</span></td></tr>
+      <tr><th scope="row">Team purchases</th><td class="value">Any post-launch team purchase is announced before execution, from disclosed wallets only.</td><td><span class="pill live">Policy published</span></td></tr>
+      <tr><th scope="row">Treasury balance</th><td class="value"><code>[LIVE VALUE / EXPLORER LINK]</code></td><td><span class="pill launch">At launch</span></td></tr>
+      <tr><th scope="row">Fees claimed to date</th><td class="value"><code>[LIVE VALUE / EXPLORER LINK]</code></td><td><span class="pill launch">At launch</span></td></tr>
+      <tr><th scope="row">Monthly summary</th><td class="value">Published monthly on this page</td><td><span class="pill launch">At launch</span></td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Administrative powers &amp; conduct</h2>
+    <div class="tablewrap"><table>
+      <tr><th scope="row">Known admin powers</th><td class="value">None in the token contract — no owner, no minting, no pause, no blacklist, no proxy. Verifiable in the published source.</td><td><span class="pill launch">At launch</span></td></tr>
+      <tr><th scope="row">Paid promoters</th><td class="value">None. Any future paid promotion is listed here before it runs.</td><td><span class="pill live">Register open</span></td></tr>
+      <tr><th scope="row">Donation commitments</th><td class="value">None. No charity claim is made unless a documented, verifiable arrangement is published here.</td><td><span class="pill live">Published</span></td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Official channels</h2>
+    <div class="tablewrap"><table>
+      <tr><th scope="row">Website</th><td class="value"><code>[OFFICIAL DOMAIN]</code></td><td><span class="pill pending">Pending</span></td></tr>
+      <tr><th scope="row">X (Twitter)</th><td class="value"><code>[@HANDLE]</code></td><td><span class="pill pending">Pending</span></td></tr>
+      <tr><th scope="row">Telegram</th><td class="value"><code>[INVITE LINK]</code></td><td><span class="pill pending">Pending</span></td></tr>
+    </table></div>
+    <p class="note">The contract address is only ever published on this website and the verified X account, simultaneously. Administrators never send unsolicited direct messages, never ask for seed phrases and never offer presale links.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><a href="index.html">← Federal Treat Reserve</a> · <a href="faq.html">FAQ</a> · <a href="meme.html">Meme generator</a></p>
+    <p>Doodle of Last Resort is an independent, unofficial parody. $DOLR is highly speculative and may lose all value. Nothing on this page is financial, investment, legal or tax advice.</p>
+  </div>
+</footer>
+
+</body>
+</html>

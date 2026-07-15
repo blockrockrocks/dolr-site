@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<title>FAQ — $DOLR</title>
+<style>
+  :root {
+    --evergreen: #173B2F;
+    --cream: #F0D5A7;
+    --parchment: #F6EBD8;
+    --gold: #D9A441;
+    --red: #9F4038;
+    --ink: #15201C;
+
+    --bg: var(--parchment);
+    --bg-raised: #FBF3E4;
+    --text: var(--ink);
+    --text-muted: #4A5A50;
+    --rule: #D8C6A4;
+    --panel: var(--evergreen);
+    --panel-text: var(--cream);
+    --accent: var(--red);
+    --accent-gold: #B07E27;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0F1F19; --bg-raised: #16291F; --text: #EFE3C8;
+      --text-muted: #A3B5A8; --rule: #2B4237; --panel: #132C22;
+      --panel-text: var(--cream); --accent: #C96A5D; --accent-gold: var(--gold);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: var(--parchment); --bg-raised: #FBF3E4; --text: var(--ink);
+    --text-muted: #4A5A50; --rule: #D8C6A4; --panel: var(--evergreen);
+    --panel-text: var(--cream); --accent: var(--red); --accent-gold: #B07E27;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F1F19; --bg-raised: #16291F; --text: #EFE3C8;
+    --text-muted: #A3B5A8; --rule: #2B4237; --panel: #132C22;
+    --panel-text: var(--cream); --accent: #C96A5D; --accent-gold: var(--gold);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Gill Sans", "Gill Sans MT", "Segoe UI", Calibri, system-ui, sans-serif;
+    font-size: 1.02rem; line-height: 1.6;
+  }
+  .ribbon {
+    background: var(--panel); color: var(--panel-text); text-align: center;
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    padding: 0.55rem 1rem;
+  }
+  .ribbon strong { color: var(--gold); font-weight: 600; }
+  .wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.25rem; }
+
+  header.top { text-align: center; padding: 2.2rem 0 1.2rem; }
+  .eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--accent-gold); margin: 0 0 0.6rem;
+  }
+  h1 {
+    font-family: Cambria, Georgia, "Times New Roman", serif;
+    font-size: clamp(1.7rem, 4.5vw, 2.4rem); line-height: 1.12; margin: 0 0 0.6rem;
+    text-wrap: balance;
+  }
+  header.top p { color: var(--text-muted); max-width: 36rem; margin: 0 auto; }
+
+  main { padding-bottom: 2rem; }
+  details {
+    border-bottom: 1px solid var(--rule);
+  }
+  details:first-of-type { border-top: 2px solid var(--rule); }
+  summary {
+    cursor: pointer; list-style: none;
+    font-family: Cambria, Georgia, serif;
+    font-size: 1.12rem; padding: 1rem 2rem 1rem 0;
+    position: relative;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: "+"; position: absolute; right: 0.3rem; top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent-gold); font-size: 1.3rem; font-family: Georgia, serif;
+  }
+  details[open] summary::after { content: "−"; }
+  summary:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  details p, details ul { margin: 0 0 1rem; color: var(--text-muted); max-width: 62ch; }
+  details ul { padding-left: 1.3rem; }
+  details strong { color: var(--text); }
+
+  footer {
+    border-top: 3px double var(--rule);
+    padding: 1.8rem 0 3rem; font-size: 0.85rem; color: var(--text-muted);
+  }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+
+<div class="ribbon"><strong>Federal Treat Reserve</strong> · Public Inquiries Desk · Unofficial parody — no affiliation</div>
+
+<header class="top wrap">
+  <a href="index.html" style="display:block;width:76px;margin:0 auto 0.9rem"><img src="assets/logo-coin.png" width="256" height="256" style="width:76px;height:76px;display:block" alt="DOLR coin logo — back to home"></a>
+  <p class="eyebrow">Frequently asked questions</p>
+  <h1>The Committee will now take questions</h1>
+  <p>Straight answers first, jokes second. If your question concerns chicken, Monty is already aware.</p>
+</header>
+
+<main class="wrap">
+
+  <details>
+    <summary>What is $DOLR?</summary>
+    <p>Doodle of Last Resort is an unofficial monetary-policy parody built around <strong>Montgomery “Monty” Doodle</strong>, a fictional goldendoodle who chairs the equally fictional Federal Treat Reserve. The token is a community memecoin; the actual product is the ongoing joke — inflation reports become the Treat Price Index, central-bank meetings become Federal Open Market Canines meetings, and forward guidance becomes barkward guidance.</p>
+  </details>
+
+  <details>
+    <summary>Is this affiliated with the Federal Reserve, Robinhood, or anyone official?</summary>
+    <p><strong>No.</strong> The project is not affiliated with, sponsored by, endorsed by or connected to the Federal Reserve System, any Federal Reserve official or family member, Robinhood Markets, Uniswap Labs or any other organization referenced in its parody. Monty is fictional and not intended to depict any real animal. Anyone claiming an official connection is lying to you.</p>
+  </details>
+
+  <details>
+    <summary>Is $DOLR an investment?</summary>
+    <p>Treat it as entertainment, not an investment. $DOLR is highly speculative and has <strong>no guaranteed value, redemption right, yield, price floor or promised utility</strong>. It may lose some or all of its value. The project makes no price predictions and no return promises — anyone promising you gains in $DOLR's name does not speak for the project. Never risk money you cannot afford to lose.</p>
+  </details>
+
+  <details>
+    <summary>Where and how does it launch?</summary>
+    <p>As a fixed-supply ERC-20 paired with native ETH in a public <strong>Uniswap v4 pool on Robinhood Chain</strong>. Supply is 1,000,000,000, minted once — the contract has no owner, no further minting, no taxes, no pause, no blacklist. The pool is created and funded in a single atomic transaction at a disclosed starting price, with a full-range liquidity position and no hook contract. The split is fixed: 900 million DOLR (90%) plus 10 ETH into the pool, 100 million (10%) to the publicly labeled treasury, and the liquidity position locked for 12 months in a verified timelock. Launch date will be announced on the official channels only.</p>
+  </details>
+
+  <details>
+    <summary>Is there a presale, whitelist or team allocation?</summary>
+    <p>No presale, no paid whitelist, no undisclosed allocations, no hidden wallets. The allocation is fixed and public: <strong>90% into the liquidity pool, 10% to the disclosed project treasury</strong>, and the deployer wallet holds nothing after launch. If the team ever buys, it happens from a disclosed wallet and is announced before execution. Any “$DOLR presale link” you encounter is a scam.</p>
+  </details>
+
+  <details>
+    <summary>How do I verify the real contract address?</summary>
+    <p>The contract is published in exactly two places, simultaneously: this website and the verified X account. Check both and make sure they match. Administrators will <strong>never</strong> DM you a contract, ask for a seed phrase, request tokens for an “airdrop” or offer early access. Monty cannot recover funds sent to fake contracts. He is a fictional dog.</p>
+  </details>
+
+  <details>
+    <summary>What are the fees, and who earns what?</summary>
+    <p>The token itself has <strong>no transfer tax</strong>. The Uniswap v4 pool charges a 1% swap fee, which accrues to the liquidity position — an NFT whose owner is disclosed on the <a href="transparency.html">transparency page</a>, along with the fee-claim policy and lock status. Any fee income the project claims is visible on-chain and used for design, hosting, moderation, taxes and a contingency reserve — not for price support, buybacks or burns.</p>
+  </details>
+
+  <details>
+    <summary>Is there a charity component?</summary>
+    <p>Not at launch, deliberately. The project will not use charity as marketing. If a donation initiative ever happens, it will be announced only after a formal, written arrangement with a recipient exists — with the recipient, calculation method, payment schedule and transaction evidence published so it can be independently verified.</p>
+  </details>
+
+  <details>
+    <summary>Who runs the community, and what does it actually do?</summary>
+    <p>Holders are “the Committee,” and the Committee makes content, not price coordination: weekly Treat Price Index reports, votes on entirely fictional policy decisions, Barkward Guidance press conferences, the Beige Bark report, memes and lore. The community never coordinates purchases, never “defends a floor” and doesn't describe large holders as market makers. That's a rule, not a vibe.</p>
+  </details>
+
+  <details>
+    <summary>Why should I trust any of this?</summary>
+    <p>Don't trust — verify. Every factual claim the project makes (creator allocation, wallet activity, fees, liquidity status) is either on-chain or linked from the <a href="transparency.html">transparency page</a>. Where something can't be verified yet, the page says “pending” instead of pretending. If you ever find a claim that can't be checked, that's a bug — report it.</p>
+  </details>
+
+  <details>
+    <summary>Is inflation transitory?</summary>
+    <p>Which one of you said “treat”?</p>
+  </details>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><a href="index.html">← Federal Treat Reserve</a> · <a href="transparency.html">Transparency</a> · <a href="meme.html">Meme generator</a></p>
+    <p>Doodle of Last Resort is an independent, unofficial parody. $DOLR is highly speculative and may lose all value. Nothing on this page is financial, investment, legal or tax advice.</p>
+  </div>
+</footer>
+
+</body>
+</html>

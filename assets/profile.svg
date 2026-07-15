@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Monty Doodle profile portrait">
+  <rect width="1024" height="1024" fill="#173B2F"/>
+
+  <!-- paw-and-biscuit watermark -->
+  <g transform="translate(790 210) scale(3.4)" fill="#F0D5A7" opacity="0.08">
+    <ellipse cx="0" cy="18" rx="34" ry="26"/>
+    <circle cx="-34" cy="-16" r="13"/>
+    <circle cx="-12" cy="-30" r="13"/>
+    <circle cx="12" cy="-30" r="13"/>
+    <circle cx="34" cy="-16" r="13"/>
+    <circle cx="0" cy="62" r="7"/>
+    <circle cx="-52" cy="34" r="7"/>
+    <circle cx="52" cy="34" r="7"/>
+  </g>
+
+  <circle cx="512" cy="512" r="486" fill="none" stroke="#D9A441" stroke-width="4" opacity="0.55"/>
+
+  <!-- Monty -->
+  <g transform="translate(-784 -370) scale(2.4)">
+    <ellipse cx="428" cy="330" rx="52" ry="88" fill="#B0723C" transform="rotate(14 428 330)"/>
+    <ellipse cx="652" cy="330" rx="52" ry="88" fill="#B0723C" transform="rotate(-14 652 330)"/>
+    <circle cx="540" cy="330" r="118" fill="#C9874B"/>
+    <circle cx="448" cy="262" r="24" fill="#C9874B"/>
+    <circle cx="484" cy="238" r="27" fill="#C9874B"/>
+    <circle cx="540" cy="228" r="30" fill="#C9874B"/>
+    <circle cx="596" cy="238" r="27" fill="#C9874B"/>
+    <circle cx="632" cy="262" r="24" fill="#C9874B"/>
+    <ellipse cx="540" cy="384" rx="62" ry="46" fill="#F0D5A7"/>
+    <ellipse cx="540" cy="366" rx="17" ry="13" fill="#15201C"/>
+    <circle cx="498" cy="318" r="10" fill="#3B2A1A"/>
+    <circle cx="582" cy="318" r="10" fill="#3B2A1A"/>
+    <circle cx="501" cy="314" r="3.5" fill="#F6EBD8"/>
+    <circle cx="585" cy="314" r="3.5" fill="#F6EBD8"/>
+    <path d="M478 292 q22 -12 44 -2" stroke="#8A5A2B" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path d="M558 288 q22 -6 44 8" stroke="#8A5A2B" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path d="M512 398 q28 14 56 0" stroke="#5B3A22" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <path d="M420 262 a124 124 0 0 1 240 0 l-18 14 a106 106 0 0 0 -204 0 z" fill="#173B2F"/>
+    <path d="M404 268 q136 -46 272 0 l-8 22 q-128 -42 -256 0 z" fill="#1F5240"/>
+    <path d="M400 560 q140 -120 280 0 z" fill="#0F2A20"/>
+    <path d="M505 462 l35 30 35 -30 -10 98 h-50 z" fill="#FBF3E4"/>
+    <path d="M540 492 l-16 22 16 46 16 -46 z" fill="#9F4038" transform="rotate(6 540 492)"/>
+    <circle cx="545" cy="512" r="5" fill="#D9A441"/>
+  </g>
+</svg>
